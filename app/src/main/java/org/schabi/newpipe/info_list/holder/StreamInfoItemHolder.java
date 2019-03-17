@@ -10,6 +10,8 @@ import org.schabi.newpipe.extractor.stream.StreamInfoItem;
 import org.schabi.newpipe.info_list.InfoItemBuilder;
 import org.schabi.newpipe.util.Localization;
 
+import java.util.Formatter;
+
 /*
  * Created by Christian Schabesberger on 01.08.16.
  * <p>
@@ -58,7 +60,8 @@ public class StreamInfoItemHolder extends StreamMiniInfoItemHolder {
             if (viewsAndDate.isEmpty()) {
                 viewsAndDate = infoItem.getUploadDate();
             } else {
-                viewsAndDate += " • " + infoItem.getUploadDate();
+                String date = new java.text.SimpleDateFormat(" ~ dd/MM/yyyy HH:mm:ss").format(new java.util.Date(infoItem.getUploadTimeStamp()*1000));
+                viewsAndDate += " • " + infoItem.getUploadDate() + date;
             }
         }
         return viewsAndDate;

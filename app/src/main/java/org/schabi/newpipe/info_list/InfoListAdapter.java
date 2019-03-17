@@ -146,12 +146,34 @@ public class InfoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             }
 
             int positionInserted = sizeConsideringHeaderOffset();
-            infoItemList.add(data);
+            try {
+                if (data.getInfoType() == InfoItem.InfoType.STREAM) {
+                    boolean inserted = false;
+                    for (int i = 0; i < infoItemList.size(); i++){
+                        long data_ts = ((StreamInfoItem)data).getUploadTimeStamp();
+                        long item_ts = ((StreamInfoItem)infoItemList.get(i)).getUploadTimeStamp();
+                        if (data_ts > item_ts){
+                            positionInserted = (i > 0 ? i : 1) - 1;
+                            infoItemList.add(positionInserted, data);
+                            inserted = true;
+                            break;
+                        }
+                    }
+                    if (!inserted)
+                        infoItemList.add(data);
+                        positionInserted = sizeConsideringHeaderOffset();
+                } else {
+                    infoItemList.add(data);
+                }
+            } catch (Exception e) {
+                Log.e(TAG, "Error adding item" + infoItemList.size() + ", thread = " + Thread.currentThread());
+            }
 
             if (DEBUG) {
                 Log.d(TAG, "addInfoItem() after > position = " + positionInserted + ", infoItemList.size() = " + infoItemList.size() + ", header = " + header + ", footer = " + footer + ", showFooter = " + showFooter);
             }
-            notifyItemInserted(positionInserted);
+            //notifyItemInserted(positionInserted);
+            notifyDataSetChanged();
 
             if (footer != null && showFooter) {
                 int footerNow = sizeConsideringHeaderOffset();
