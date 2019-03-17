@@ -321,6 +321,7 @@ public class FeedFragment extends BaseListFragment<List<SubscriptionEntity>, Voi
             }
 
             private void onDone() {
+                infoListAdapter.notifyDataSetChanged();
                 if (observer.isDisposed()) {
                     return;
                 }

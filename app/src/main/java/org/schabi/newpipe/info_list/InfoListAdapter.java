@@ -173,7 +173,6 @@ public class InfoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Log.d(TAG, "addInfoItem() after > position = " + positionInserted + ", infoItemList.size() = " + infoItemList.size() + ", header = " + header + ", footer = " + footer + ", showFooter = " + showFooter);
             }
             //notifyItemInserted(positionInserted);
-            notifyDataSetChanged();
 
             if (footer != null && showFooter) {
                 int footerNow = sizeConsideringHeaderOffset();
